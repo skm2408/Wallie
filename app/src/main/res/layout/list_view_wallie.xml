@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardPreventCornerOverlap="true"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="5dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_width="170dp"
+    android:layout_margin="7dp"
+    android:layout_height="220dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivImage"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:scaleType="centerCrop"
+                android:background="#2d2d2d"
+                 />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/likes"
+                    android:scaleType="fitCenter"
+                    />
+
+                <TextView
+                    android:id="@+id/tvLikes"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:fontFamily="monospace"
+                    android:hint="Like"
+                    android:textColor="#2d2d2d"
+                    android:textSize="12sp"
+                    android:textStyle="normal"
+                    />
+
+                <TextView
+                    android:id="@+id/tvUsers"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:fontFamily="serif-monospace"
+                    android:hint="Users"
+                    android:textColor="#2d2d2d"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
+        </LinearLayout>
+</android.support.v7.widget.CardView>
