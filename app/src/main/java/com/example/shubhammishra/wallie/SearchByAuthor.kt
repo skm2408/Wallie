@@ -55,7 +55,18 @@ class SearchByAuthor : AppCompatActivity() {
         {
             if(grantResults[0]==PackageManager.PERMISSION_GRANTED)
             {
-                GetImage().execute(grid.imgUrl)
+                val root = Environment.getExternalStorageDirectory().toString()
+                val myDir = File("$root/Wallie")
+                myDir.mkdirs()
+                val n1=grid.id.toString()
+                val fname = "Image-$n1.jpg"
+                val file = File(myDir,fname)
+                if(file.exists())
+                {
+                    Toast.makeText(this@SearchByAuthor,"This image already exist",Toast.LENGTH_SHORT).show()
+                }else{
+                    GetImage().execute(grid.imgUrl)
+                }
             }
             else
             {
@@ -67,14 +78,46 @@ class SearchByAuthor : AppCompatActivity() {
         {
             if(grantResults[0]==PackageManager.PERMISSION_GRANTED)
             {
-                GetImage().execute(grid.imgUrl)
+                val root = Environment.getExternalStorageDirectory().toString()
+                val myDir = File("$root/Wallie")
+                myDir.mkdirs()
                 val n1=grid.id.toString()
                 val fname = "Image-$n1.jpg"
-                shareImage(fname)
+                val file = File(myDir,fname)
+                if(file.exists())
+                {
+                    shareImage(fname)
+                }else{
+                    GetImage().execute(grid.imgUrl)
+                    shareImage(fname)
+                }
             }
             else
             {
                 Toast.makeText(this@SearchByAuthor,"Can't share the image without your permission",Toast.LENGTH_SHORT).show()
+            }
+        }
+        else if(requestCode==102)
+        {
+            if(grantResults[0]==PackageManager.PERMISSION_GRANTED&&grantResults[1]==PackageManager.PERMISSION_GRANTED)
+            {
+                val root = Environment.getExternalStorageDirectory().toString()
+                val myDir = File("$root/Wallie")
+                myDir.mkdirs()
+                val n1=grid.id.toString()
+                val fname = "Image-$n1.jpg"
+                val file = File(myDir,fname)
+                if(file.exists())
+                {
+                    setAsWallpaper()
+                }else{
+                    GetImage().execute(grid.imgUrl)
+                    setAsWallpaper()
+                }
+            }
+            else
+            {
+                Toast.makeText(this@SearchByAuthor,"Can't set the image as Wallpaper without your permission",Toast.LENGTH_SHORT).show()
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -100,15 +143,28 @@ class SearchByAuthor : AppCompatActivity() {
             Log.d("Worked", "Worked Properly")
             val wallpaperManager = WallpaperManager.getInstance(applicationContext)
             try {
-                wallpaperManager.setBitmap(viewToBitmap(ivMain, ivMain.width, ivMain.height))
-                Toast.makeText(this@SearchByAuthor, "Set AS Wallpaper", Toast.LENGTH_SHORT).show()
+//                wallpaperManager.setBitmap(viewToBitmap(ivMain, ivMain.width, ivMain.height))
+//                Toast.makeText(this@SearchByAuthor, "Set AS Wallpaper", Toast.LENGTH_SHORT).show()
                 val perm=ContextCompat.checkSelfPermission(this@SearchByAuthor,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                if(perm==PackageManager.PERMISSION_GRANTED)
+                val perm2=ContextCompat.checkSelfPermission(this@SearchByAuthor,android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                if(perm==PackageManager.PERMISSION_GRANTED&&perm2==PackageManager.PERMISSION_GRANTED)
                 {
-                    GetImage().execute(grid.imgUrl)
+                    val root = Environment.getExternalStorageDirectory().toString()
+                    val myDir = File("$root/Wallie")
+                    myDir.mkdirs()
+                    val n1=grid.id.toString()
+                    val fname = "Image-$n1.jpg"
+                    val file = File(myDir,fname)
+                    if(file.exists())
+                    {
+                        setAsWallpaper()
+                    }else{
+                        GetImage().execute(grid.imgUrl)
+                        setAsWallpaper()
+                    }
                 }
                 else {
-                    ActivityCompat.requestPermissions(this@SearchByAuthor, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
+                    ActivityCompat.requestPermissions(this@SearchByAuthor, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE), 102)
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -123,7 +179,18 @@ class SearchByAuthor : AppCompatActivity() {
                     val perm=ContextCompat.checkSelfPermission(this@SearchByAuthor,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     if(perm==PackageManager.PERMISSION_GRANTED)
                     {
-                        GetImage().execute(grid.imgUrl)
+                        val root = Environment.getExternalStorageDirectory().toString()
+                        val myDir = File("$root/Wallie")
+                        myDir.mkdirs()
+                        val n1=grid.id.toString()
+                        val fname = "Image-$n1.jpg"
+                        val file = File(myDir,fname)
+                        if(file.exists())
+                        {
+                         Toast.makeText(this@SearchByAuthor,"This image already exist",Toast.LENGTH_SHORT).show()
+                        }else{
+                            GetImage().execute(grid.imgUrl)
+                        }
                     }
                     else {
                         ActivityCompat.requestPermissions(this@SearchByAuthor, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
@@ -141,10 +208,19 @@ class SearchByAuthor : AppCompatActivity() {
             val perm=ContextCompat.checkSelfPermission(this@SearchByAuthor,android.Manifest.permission.READ_EXTERNAL_STORAGE)
             if(perm==PackageManager.PERMISSION_GRANTED)
             {
-                GetImage().execute(grid.imgUrl)
+                val root = Environment.getExternalStorageDirectory().toString()
+                val myDir = File("$root/Wallie")
+                myDir.mkdirs()
                 val n1=grid.id.toString()
                 val fname = "Image-$n1.jpg"
-                shareImage(fname)
+                val file = File(myDir,fname)
+                if(file.exists())
+                {
+                    shareImage(fname)
+                }else{
+                   GetImage().execute(grid.imgUrl)
+                   shareImage(fname)
+                }
             }
             else
             {
@@ -152,6 +228,18 @@ class SearchByAuthor : AppCompatActivity() {
             }
         })
         GetWallpaper("https://api.desktoppr.co/1/users/${grid.uploader}/wallpapers")
+    }
+
+    private fun setAsWallpaper() {
+        val n1=grid.id.toString()
+        val fname = "Image-$n1.jpg"
+        val root = Environment.getExternalStorageDirectory()
+        val contentUri = Uri.fromFile(File(root.absolutePath+"/Wallie/$fname"))
+        val intent = Intent(Intent.ACTION_ATTACH_DATA)
+        intent.addCategory(Intent.CATEGORY_DEFAULT)
+        intent.setDataAndType(contentUri, "image/*")
+        intent.putExtra("mimeType", "image/*")
+        startActivity(intent)
     }
 
     private fun shareImage(fname: String) {
@@ -177,7 +265,9 @@ class SearchByAuthor : AppCompatActivity() {
             val fname = "Image-$n1.jpg"
             val file = File(myDir,fname)
             if (file.exists())
+            {
                 file.delete()
+            }
             try {
                 val out = FileOutputStream(file)
                 finalBitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, out)
@@ -217,12 +307,6 @@ class SearchByAuthor : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
         intent.setData(Uri.fromFile(new_file))
         sendBroadcast(intent)
-    }
-    fun viewToBitmap(view: View, width: Int, height: Int): Bitmap {
-        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        view.draw(canvas)
-        return bitmap
     }
     fun GetWallpaper(url: String): Unit {
         val client = OkHttpClient()
