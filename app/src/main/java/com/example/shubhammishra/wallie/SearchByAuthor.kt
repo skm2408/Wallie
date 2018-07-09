@@ -1,5 +1,4 @@
 package com.example.shubhammishra.wallie
-
 import android.app.AlertDialog
 import android.app.WallpaperManager
 import android.content.DialogInterface
@@ -7,12 +6,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.drawable.Drawable
-import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.AsyncTask
-import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -20,31 +15,19 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.shubhammishra.wallie.Adapter.GridAdapter
 import kotlinx.android.synthetic.main.activity_search_by_author.*
-import kotlinx.android.synthetic.main.activity_wallpaper.*
 import okhttp3.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
-import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
-import com.bumptech.glide.request.animation.GlideAnimation
-import com.bumptech.glide.request.target.SimpleTarget
-import com.example.shubhammishra.wallie.R.drawable.placeholder
-import com.example.shubhammishra.wallie.R.id.progress
-import kotlinx.android.synthetic.main.list_view_wallie.*
 import java.io.File
-import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.lang.Exception
 import java.net.URL
-import java.security.AccessController.getContext
-import java.text.SimpleDateFormat
 import java.util.*
-import java.util.jar.Manifest
 
 
 class SearchByAuthor : AppCompatActivity() {

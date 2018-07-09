@@ -8,10 +8,6 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.shubhammishra.wallie.GridPojo
 import com.example.shubhammishra.wallie.R
-import com.example.shubhammishra.wallie.R.id.ivImage
-import com.example.shubhammishra.wallie.R.id.parent
-import com.example.shubhammishra.wallie.Wallpaper
-import kotlinx.android.synthetic.main.activity_wallpaper.view.*
 import kotlinx.android.synthetic.main.list_view_wallie.view.*
 
 class GridAdapter(val wallArray:ArrayList<GridPojo>,val NextActivity:(gridPojo:GridPojo)->Unit):RecyclerView.Adapter<GridAdapter.GridViewHolder>() {

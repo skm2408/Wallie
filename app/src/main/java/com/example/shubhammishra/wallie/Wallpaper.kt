@@ -7,14 +7,11 @@ import android.support.v7.widget.GridLayoutManager
 import android.util.Log
 import android.view.View
 import com.example.shubhammishra.wallie.Adapter.GridAdapter
-import com.example.shubhammishra.wallie.R.id.wallRecycle
 import kotlinx.android.synthetic.main.activity_wallpaper.*
 import okhttp3.*
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
-import java.io.Serializable
 
 class Wallpaper : AppCompatActivity() {
     var current:Int=1
