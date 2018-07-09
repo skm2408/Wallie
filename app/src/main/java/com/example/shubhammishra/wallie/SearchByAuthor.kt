@@ -1,6 +1,5 @@
 package com.example.shubhammishra.wallie
 import android.app.AlertDialog
-import android.app.WallpaperManager
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -15,6 +14,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.shubhammishra.wallie.Adapter.GridAdapter
@@ -48,7 +48,7 @@ class SearchByAuthor : AppCompatActivity() {
                 {
                     Toast.makeText(this@SearchByAuthor,"This image already exist",Toast.LENGTH_SHORT).show()
                 }else{
-                    GetImage().execute(grid.imgUrl)
+                    GetImage(findViewById<ImageButton>(R.id.btnDownload)).execute(grid.imgUrl)
                 }
             }
             else
@@ -71,8 +71,7 @@ class SearchByAuthor : AppCompatActivity() {
                 {
                     shareImage(fname)
                 }else{
-                    GetImage().execute(grid.imgUrl)
-                    shareImage(fname)
+                    GetImage(findViewById<ImageButton>(R.id.btnShare)).execute(grid.imgUrl)
                 }
             }
             else
@@ -94,8 +93,7 @@ class SearchByAuthor : AppCompatActivity() {
                 {
                     setAsWallpaper()
                 }else{
-                    GetImage().execute(grid.imgUrl)
-                    setAsWallpaper()
+                    GetImage(findViewById<ImageButton>(R.id.btnSetas)).execute(grid.imgUrl)
                 }
             }
             else
@@ -124,10 +122,7 @@ class SearchByAuthor : AppCompatActivity() {
         tvSuggestion.text = "More Wallpapers by " + grid.uploader
         btnSetas.setOnClickListener({
             Log.d("Worked", "Worked Properly")
-            val wallpaperManager = WallpaperManager.getInstance(applicationContext)
             try {
-//                wallpaperManager.setBitmap(viewToBitmap(ivMain, ivMain.width, ivMain.height))
-//                Toast.makeText(this@SearchByAuthor, "Set AS Wallpaper", Toast.LENGTH_SHORT).show()
                 val perm=ContextCompat.checkSelfPermission(this@SearchByAuthor,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 val perm2=ContextCompat.checkSelfPermission(this@SearchByAuthor,android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 if(perm==PackageManager.PERMISSION_GRANTED&&perm2==PackageManager.PERMISSION_GRANTED)
@@ -142,8 +137,7 @@ class SearchByAuthor : AppCompatActivity() {
                     {
                         setAsWallpaper()
                     }else{
-                        GetImage().execute(grid.imgUrl)
-                        setAsWallpaper()
+                        GetImage(findViewById<ImageButton>(R.id.btnSetas)).execute(grid.imgUrl)
                     }
                 }
                 else {
@@ -172,7 +166,7 @@ class SearchByAuthor : AppCompatActivity() {
                         {
                          Toast.makeText(this@SearchByAuthor,"This image already exist",Toast.LENGTH_SHORT).show()
                         }else{
-                            GetImage().execute(grid.imgUrl)
+                            GetImage(findViewById<ImageButton>(R.id.btnDownload)).execute(grid.imgUrl)
                         }
                     }
                     else {
@@ -201,8 +195,7 @@ class SearchByAuthor : AppCompatActivity() {
                 {
                     shareImage(fname)
                 }else{
-                   GetImage().execute(grid.imgUrl)
-                   shareImage(fname)
+                   GetImage(findViewById<ImageButton>(R.id.btnShare)).execute(grid.imgUrl)
                 }
             }
             else
@@ -235,7 +228,7 @@ class SearchByAuthor : AppCompatActivity() {
 
     }
 
-    inner class GetImage:AsyncTask<String,Unit,Bitmap?>()
+    inner class GetImage(val id:ImageButton):AsyncTask<String,Unit,Bitmap?>()
     {
         override fun onPostExecute(result: Bitmap?) {
             super.onPostExecute(result)
@@ -262,6 +255,16 @@ class SearchByAuthor : AppCompatActivity() {
                 Toast.makeText(this@SearchByAuthor, "Directory Not Found!", Toast.LENGTH_SHORT).show()
             }
             refreshGallery(file)
+            if(id==btnSetas)
+            {
+                setAsWallpaper()
+            }
+            else if(id==btnShare)
+            {
+                val n1=grid.id.toString()
+                val fname = "Image-$n1.jpg"
+                shareImage(fname)
+            }
         }
 
         override fun doInBackground(vararg params: String?): Bitmap? {
