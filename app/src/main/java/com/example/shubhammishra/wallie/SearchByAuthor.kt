@@ -63,6 +63,20 @@ class SearchByAuthor : AppCompatActivity() {
             }
 
         }
+        else if(requestCode==101)
+        {
+            if(grantResults[0]==PackageManager.PERMISSION_GRANTED)
+            {
+                GetImage().execute(grid.imgUrl)
+                val n1=grid.id.toString()
+                val fname = "Image-$n1.jpg"
+                shareImage(fname)
+            }
+            else
+            {
+                Toast.makeText(this@SearchByAuthor,"Can't share the image without your permission",Toast.LENGTH_SHORT).show()
+            }
+        }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
     lateinit var progressDialog:AlertDialog
@@ -123,7 +137,31 @@ class SearchByAuthor : AppCompatActivity() {
             })
             alert.show()
         }
+        btnShare.setOnClickListener({
+            val perm=ContextCompat.checkSelfPermission(this@SearchByAuthor,android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            if(perm==PackageManager.PERMISSION_GRANTED)
+            {
+                GetImage().execute(grid.imgUrl)
+                val n1=grid.id.toString()
+                val fname = "Image-$n1.jpg"
+                shareImage(fname)
+            }
+            else
+            {
+                ActivityCompat.requestPermissions(this@SearchByAuthor,arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),101)
+            }
+        })
         GetWallpaper("https://api.desktoppr.co/1/users/${grid.uploader}/wallpapers")
+    }
+
+    private fun shareImage(fname: String) {
+        val root = Environment.getExternalStorageDirectory()
+        val shareIntent=Intent(Intent.ACTION_SEND)
+        Log.d("Photo Name","$fname")
+        shareIntent.setType("image/*")
+        shareIntent.putExtra(Intent.EXTRA_STREAM,Uri.fromFile(File(root.absolutePath+"/Wallie/$fname")))
+        startActivity(Intent.createChooser(shareIntent,"Share Via"))
+
     }
 
     inner class GetImage:AsyncTask<String,Unit,Bitmap?>()

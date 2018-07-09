@@ -18,45 +18,64 @@
         android:layout_weight="1"
         app:cardCornerRadius="7dp"
         app:cardElevation="9dp">
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="cursive"
-            android:gravity="center"
-            android:text="Wallie"
-            android:textColor="@android:color/holo_purple"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentTop="true"
+               android:layout_centerHorizontal="true"
+               android:layout_gravity="center"
+               android:fontFamily="cursive"
+               android:gravity="center"
+               android:text="Wallie"
+               android:textColor="@android:color/holo_purple"
+               android:textSize="30sp"
+               android:textStyle="bold" />
+
+           <ImageButton
+               android:id="@+id/btnShare"
+               android:layout_width="50dp"
+               android:layout_height="50dp"
+               android:layout_alignParentEnd="true"
+               android:layout_alignParentTop="true"
+               android:layout_gravity="right"
+               android:background="@android:color/transparent"
+               android:scaleType="centerInside"
+               android:src="@drawable/share" />
+       </RelativeLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:cardBackgroundColor="#2d2d2d"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_weight="5"
+        app:cardBackgroundColor="#2d2d2d"
         app:cardCornerRadius="7dp"
         app:cardElevation="9dp">
-        <ImageView
-            android:id="@+id/ivMain"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside" />
+            <ImageView
+                android:id="@+id/ivMain"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:scaleType="centerInside" />
     </android.support.v7.widget.CardView>
+
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
         android:layout_weight="2"
         app:cardCornerRadius="7dp"
-        app:cardElevation="9dp"
-        >
+        app:cardElevation="9dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -128,15 +147,17 @@
                 android:src="@drawable/setas" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
+
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
         android:layout_weight="8"
         app:cardCornerRadius="7dp"
         app:cardElevation="9dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
